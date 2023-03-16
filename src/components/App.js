@@ -4,6 +4,10 @@ import Header from './header/Header';
 import Dummy from './dummy/Dummy';
 import SolutionLetters from './SolutionLetters';
 import ErrorLetters from './ErrorLetters';
+import Form from './Form';
+import Footer from './Footer';
+
+
 
 
 function App() {
@@ -40,11 +44,10 @@ useEffect(() => {
     setNumberOfErrors(numberOfErrors+1);
   }
 
-  const handleChangeLastLetter = (event) =>{
-    const inputValue = event.target.value;
-    if(isValidname(inputValue)){
-      setlastLetter(inputValue);
-      setuserLetters ([...userLetters, inputValue]);
+  const lifting = (value) => {
+    if (isValidname(value)) {
+      setlastLetter(value);
+      setuserLetters([...userLetters, value]);
     
     }else{
     }
@@ -63,25 +66,19 @@ useEffect(() => {
           <SolutionLetters word={word} userLetters={userLetters}/>
           <ErrorLetters word={word} userLetters={userLetters} renderErrorLetters={renderErrorLetters}/>
 
-          <form className="form">
-            <label className="title" htmlFor="last-letter">Escribe una letra:</label>
-            <input
-              autoComplete="off"
-              className="form__input"
-              maxLength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              value={lastLetter}
-              onChange={handleChangeLastLetter}
-            />
-          </form>
+        <Form lifting={lifting}
+        />
+
         </section>
         <Dummy numberOfErrors= {numberErrors}/>
         <button onClick={handleClickIncrementar} className="button">Incrementar</button>
       
       </main>
-    </div>)
+
+    <Footer />
+
+  </div>
+  )
 }
 
 export default App;
