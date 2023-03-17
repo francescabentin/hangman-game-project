@@ -1,3 +1,5 @@
+import '../styles/components/_letters.scss';
+
 function ErrorLetters (props){
     return (
         <div className="error">

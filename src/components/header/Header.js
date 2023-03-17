@@ -1,4 +1,4 @@
-
+import '../../styles/components/_header.scss';
 
 const Header = () =>{
     return (

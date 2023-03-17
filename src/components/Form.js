@@ -1,8 +1,9 @@
-
+import '../styles/components/_form.scss';
 
 const Form = (props) => {
 
     const handleChangeLastLetter = (ev) => {
+
         const value = ev.target.value;
         props.lifting(value);
     }

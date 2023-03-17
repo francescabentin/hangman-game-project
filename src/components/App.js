@@ -6,7 +6,9 @@ import SolutionLetters from './SolutionLetters';
 import ErrorLetters from './ErrorLetters';
 import Form from './Form';
 import Footer from './Footer';
-
+import {Route, Routes} from 'react-router-dom';
+import Instructions from './Instructions';
+import Options from './Options';
 
 
 
@@ -62,17 +64,39 @@ useEffect(() => {
   return    ( <div className="page">
     <Header/> 
       <main className="main">
-        <section>
-          <SolutionLetters word={word} userLetters={userLetters}/>
-          <ErrorLetters word={word} userLetters={userLetters} renderErrorLetters={renderErrorLetters}/>
+        <Routes>
+          <Route
+            path="/A Jugar"
+            element={
+              <>
+              <SolutionLetters word={word} userLetters={userLetters}/>
+              <ErrorLetters word={word} userLetters={userLetters} renderErrorLetters={renderErrorLetters}/>
+              <Form lifting={lifting}/>
+              <Dummy numberOfErrors= {numberErrors}/>
+              <button onClick={handleClickIncrementar} className="button">Incrementar</button>
+             </>
+            }
+          />
+          <Route
+            path="/Instructions"
+            element={
+            <>
+              <Instructions/>
+             </>
+            }
+          />
+          <Route
+            path="/Options"
+            element={
+            <>
+              <Options/>
+             </>
+            }
+          />
+       
+        
 
-        <Form lifting={lifting}
-        />
-
-        </section>
-        <Dummy numberOfErrors= {numberErrors}/>
-        <button onClick={handleClickIncrementar} className="button">Incrementar</button>
-      
+        </Routes>
       </main>
 
     <Footer />
