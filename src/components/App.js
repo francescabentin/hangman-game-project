@@ -53,7 +53,13 @@ useEffect(() => {
     
     }else{
     }
+  }
 
+
+  const handleChangeLifting = (value) =>{
+    setWord(value);
+    setlastLetter('');
+    setuserLetters('');
   }
   
   const isValidname = (name) =>{
@@ -89,9 +95,10 @@ useEffect(() => {
             path="/Options"
             element={
             <>
-              <Options/>
+              <Options handleChangeLifting={handleChangeLifting}/>
              </>
             }
+
           />
        
         

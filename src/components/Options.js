@@ -1,16 +1,32 @@
-import '../styles/components/_options.scss';
 
-const Options = () => {
+
+const Options = (props) => {
+    const handleSubmit = (ev) => {
+        ev.prevent.defaul();
+    }
+
+    const handleChange = (ev) => {
+        const value = ev.target.value;
+        props.handleChangeLifting(value);
+    }
+
     return (
-        <section class="options">
-            <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            provident nisi voluptatem est nostrum optio perferendis doloremque,
-            delectus at, assumenda suscipit sit odio ipsum error consequatur numquam
-            vero impedit nulla?
-            </p>
+        <form onSubmit={handleSubmit}>
+        <label className="title" htmlFor="word">
+            Escribe aquí la palabra que hay que adivinar:
+        </label>
+        <input
+            autoFocus
+            autoComplete="off"
+            className="form__input"
+            maxLength="15"
+            type="text"
+            id="word"
+            name="word"
+            onChange={handleChange}
+        />
+    </form>
 
-        </section>
     )
 }
 
