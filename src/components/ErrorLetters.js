@@ -1,14 +1,25 @@
-import '../styles/components/_letters.scss';
+import '../styles/Letters.scss';
 
-function ErrorLetters (props){
-    return (
-        <div className="error">
-            <h2 className="title">Letras falladas:</h2>
-            <ul className="letters">
-              {props.renderErrorLetters()}
-            </ul>
-          </div>
-    )
+const ErrorLetters = props => {
+  const renderErrorLetters = () => {
+    const errorLetters = props.userLetters.filter(
+      letter => props.word.toLocaleLowerCase().includes(letter.toLocaleLowerCase()) === false
+    );
+    return errorLetters.map((letter, index) => {
+      return (
+        <li key={index} className="letter">
+          {letter}
+        </li>
+      );
+    });
+  };
+
+  return (
+    <div className="error">
+      <h2 className="title">Letras falladas:</h2>
+      <ul className="letters">{renderErrorLetters()}</ul>
+    </div>
+  );
 };
 
 export default ErrorLetters;

@@ -1,18 +1,10 @@
-import '../styles/components/_instructions.scss';
+import '../styles/Instructions.scss';
 
 const Instructions = () => {
     return (
         <section class="instructions">
             <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            provident nisi voluptatem est nostrum optio perferendis doloremque,
-            delectus at, assumenda suscipit sit odio ipsum error consequatur numquam
-            vero impedit nulla?
-            </p>
-             <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-            animi voluptatem quis impedit amet in dicta soluta explicabo, fugit magni
-            mollitia, pariatur eos, repellendus aut esse recusandae minima eum eaque.
+                El propio juego u otro jugador, según la versión, ponen una palabra secreta, de la que se conoce el número de letras y hasta tres comodines de pista como ayuda. El jugador podrá ir pidiendo letras que aparecerán en la palabra secreta si ésta las contiene, en caso contrario contará como fallo. El objetivo consiste en acertar la palabra secreta sin cometer más de seis fallos y antes de que se agote el tiempo. El jugador podrá pedir hasta tres comodines de tiempo. Tanto los comodines de pista como los de tiempo restan puntuación al ser utilizados.
              </p>
         </section>
     )

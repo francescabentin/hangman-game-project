@@ -1,115 +1,80 @@
-import '../styles/App.scss';
-import {useEffect, useState} from 'react';
-import Header from './header/Header';
-import Dummy from './dummy/Dummy';
-import SolutionLetters from './SolutionLetters';
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+// components
+import Dummy from '../components/dummy/Dummy';
 import ErrorLetters from './ErrorLetters';
-import Form from './Form';
 import Footer from './Footer';
-import {Route, Routes} from 'react-router-dom';
+import Form from './Form';
+import Header from './header/Header';
 import Instructions from './Instructions';
+//import Loading from './Loading';
 import Options from './Options';
-
-
+import SolutionLetters from './SolutionLetters';
+// api
+import getWordFromApi from '../services/api';
+// styles
+import '../styles/App.scss';
 
 function App() {
+  const [word, setWord] = useState('');
+  const [userLetters, setUserLetters] = useState([]);
+  const [lastLetter, setLastLetter] = useState('');
+ // const [loading, setLoading] = useState(false);
 
-  const [numberOfErrors,setNumberOfErrors] = useState(0); 
-  const [lastLetter,setlastLetter] = useState(''); 
-  const [word,setWord] = useState(''); 
-  const [userLetters,setuserLetters] = useState([]); 
-
-useEffect(() => {
-    fetch('https://dev.adalab.es/api/random/word')
-      .then((response) => response.json())
-      .then((responseData) => {
-        setWord(responseData.word);
-      });
+  useEffect(() => {
+    //setLoading(true);
+    getWordFromApi().then(word => {
+      setWord(word);
+      //setLoading(false);
+    });
   }, []);
 
+  // events
 
-  const renderErrorLetters = () =>{
-    return userLetters
-      .filter((eachLetter) => !(word.includes(eachLetter)))
-      .map( (eachLetter, index) => {return <li className="letter" key={index}>{eachLetter}</li>})
-  }
-
-  const counterErrorLetters = () =>{
-    return userLetters
-      .filter((eachLetter) => !(word.includes(eachLetter)))
-      .length 
-  }
-
-  const numberErrors = counterErrorLetters();
-
-  const handleClickIncrementar= ()=> {
-    setNumberOfErrors(numberOfErrors+1);
-  }
-
-  const lifting = (value) => {
-    if (isValidname(value)) {
-      setlastLetter(value);
-      setuserLetters([...userLetters, value]);
-    
-    }else{
-    }
-  }
-
-
-  const handleChangeLifting = (value) =>{
+  const handleWord = value => {
     setWord(value);
-    setlastLetter('');
-    setuserLetters('');
-  }
-  
-  const isValidname = (name) =>{
-    return /^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/.test(name);
-  }
- 
+    setUserLetters([]);
+    setLastLetter('');
+  };
 
-  return    ( <div className="page">
-    <Header/> 
+  const handleLastLetter = value => {
+    value = value.toLocaleLowerCase();
+    setLastLetter(value);
+    userLetters.push(value);
+    setUserLetters([...userLetters]);
+  };
+
+  // render helpers
+
+  const getNumberOfErrors = () => {
+    const errorLetters = userLetters.filter(letter => word.includes(letter) === false);
+    return errorLetters.length;
+  };
+
+  return (
+    <div className="page">
+      <Header />
       <main className="main">
-        <Routes>
-          <Route
-            path="/A Jugar"
-            element={
-              <>
-              <SolutionLetters word={word} userLetters={userLetters}/>
-              <ErrorLetters word={word} userLetters={userLetters} renderErrorLetters={renderErrorLetters}/>
-              <Form lifting={lifting}/>
-              <Dummy numberOfErrors= {numberErrors}/>
-              <button onClick={handleClickIncrementar} className="button">Incrementar</button>
-             </>
-            }
-          />
-          <Route
-            path="/Instructions"
-            element={
-            <>
-              <Instructions/>
-             </>
-            }
-          />
-          <Route
-            path="/Options"
-            element={
-            <>
-              <Options handleChangeLifting={handleChangeLifting}/>
-             </>
-            }
+        <section>
+          <Routes>
+            <Route path="/"
+              element={
+                <>
+                  <SolutionLetters word={word} userLetters={userLetters} />
+                  <ErrorLetters word={word} userLetters={userLetters} />
+                  <Form lastLetter={lastLetter} handleLastLetter={handleLastLetter} />
+                </>
+              } />
 
-          />
-       
-        
-
-        </Routes>
+            <Route path="/instructions" element={<Instructions />} />
+            <Route path="/options" element={<Options word={word} handleWord={handleWord} />} />
+          </Routes>
+        </section>
+        <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
-
-    <Footer />
-
-  </div>
-  )
+      <Footer />
+    </div>
+  );
 }
 
 export default App;
