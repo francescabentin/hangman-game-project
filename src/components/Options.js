@@ -23,7 +23,7 @@ const Word = props => {
                 id="word"
                 name="word"
                 onChange={handleChange}
-                value={props.word}
+                // value={props.word}  // no hay que cerrar el circulo por que es solo si es escribe
             />
         </form>
     );
